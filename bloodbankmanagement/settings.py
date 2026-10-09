@@ -159,11 +159,24 @@ elif os.environ.get('ENVIRONMENT') == 'production':
         }
     }
 else:
-    # SQLite for local development only
+    # Serverless SQLite handling (Vercel has a read-only filesystem except /tmp)
+    if os.environ.get('VERCEL') or os.environ.get('AWS_LAMBDA_FUNCTION_NAME'):
+        import shutil
+        sqlite_src = BASE_DIR / 'db.sqlite3'
+        sqlite_dst = Path('/tmp/db.sqlite3')
+        if sqlite_src.exists() and not sqlite_dst.exists():
+            try:
+                shutil.copy2(sqlite_src, sqlite_dst)
+            except Exception:
+                pass
+        db_path = sqlite_dst if sqlite_dst.exists() else sqlite_src
+    else:
+        db_path = BASE_DIR / 'db.sqlite3'
+
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'NAME': db_path,
         }
     }
 
@@ -271,12 +284,6 @@ LOGGING = {
         },
     },
     'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'logs.txt',
-            'formatter': 'verbose',
-        },
         'console': {
             'level': 'INFO',
             'class': 'logging.StreamHandler',
@@ -284,7 +291,7 @@ LOGGING = {
         },
     },
     'root': {
-        'handlers': ['file', 'console'],
+        'handlers': ['console'],
         'level': 'INFO',
     },
 }
