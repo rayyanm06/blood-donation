@@ -42,18 +42,20 @@
         height: 100%;
         z-index: 1;
         overflow: hidden;
+        pointer-events: none;
     }
     
     .video-background iframe {
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 100vw;
-        height: 56.25vw; /* 16:9 aspect ratio */
-        min-height: 100vh;
-        min-width: 177.77vh; /* 16:9 aspect ratio */
-        transform: translate(-50%, -50%);
+        width: 140vw;
+        height: 78.75vw; /* 16:9 aspect ratio */
+        min-height: 140vh;
+        min-width: 248.88vh; /* 16:9 aspect ratio */
+        transform: translate(-50%, -50%) scale(1.25);
         pointer-events: none;
+        border: 0;
     }
     
     /* Video Overlay Shade */
@@ -640,11 +642,11 @@
         <!-- Video Background -->
         <div class="video-background">
             <iframe 
-                src="https://www.youtube.com/embed/tKv7cWakthA?autoplay=1&mute=1&loop=1&playlist=tKv7cWakthA&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&disablekb=1&fs=0&cc_load_policy=0&playsinline=1&enablejsapi=1"
+                src="https://www.youtube-nocookie.com/embed/tFG7oB721fE?autoplay=1&mute=1&loop=1&playlist=tFG7oB721fE&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&disablekb=1&fs=0&playsinline=1&enablejsapi=1"
                 frameborder="0"
-                allow="autoplay; encrypted-media"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen
-                title="Blood Donation Background Video">
+                title="Red Blood Cells Flowing Background Video">
             </iframe>
         </div>
         
